@@ -25,9 +25,16 @@ async fn hello(ctx: Context<'_>) -> Result<(), Error> {
     Ok(())
 }
 
+/// Another "Test-Command"
 #[poise::command(slash_command, prefix_command)]
 async fn lorem(ctx: Context<'_>) -> Result<(), Error> {
     ctx.say("Lorem Ipsum dolor sit amet!").await?;
+    Ok(())
+}
+
+#[poise::command(slash_command, prefix_command)]
+async fn botinfo(ctx: Context<'_>) -> Result<(), Error> {
+    ctx.say("Bot-Version: 0.1\nVerwendete Bibliotheken: Serenity + Poise\nProgrammiersprache: Rust\nEntwickler: SvH").await?;
     Ok(())
 }
 
@@ -39,7 +46,7 @@ async fn main() {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![age(), hello(), lorem()],
+            commands: vec![age(), hello(), lorem(), botinfo()],
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
