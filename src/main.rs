@@ -34,6 +34,7 @@ async fn botinfo(ctx: Context<'_>) -> Result<(), Error> {
 }
 
 /// To-Do-Liste
+/// Another "Test-Command"
 #[poise::command(slash_command, prefix_command)]
 async fn todo(ctx: Context<'_>) -> Result<(), Error> {
     ctx.send(poise::CreateReply::default()
