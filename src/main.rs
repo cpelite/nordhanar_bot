@@ -1,35 +1,52 @@
+//Imports start here
 use poise::serenity_prelude as serenity;
 use dotenv::dotenv;
 use std::env;
+// Imports end here.
+
 
 struct Data {} // User data, which is stored and accessible in all command invocations
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
 
-/// Displays your or another user's account creation date
-#[poise::command(slash_command, prefix_command)]
-async fn age(
-    ctx: Context<'_>,
-    #[description = "Selected user"] user: Option<serenity::User>,
-) -> Result<(), Error> {
-    let u = user.as_ref().unwrap_or_else(|| ctx.author());
-    let response = format!("{}'s account was created at {}", u.name, u.created_at());
-    ctx.say(response).await?;
-    Ok(())
-}
 
-/// Simple Hello World command. 
+/* COMMANDS */
+
+/// Hallo Welt!
 #[poise::command(slash_command, prefix_command)]
 async fn hello(ctx: Context<'_>) -> Result<(), Error> {
-    ctx.say("Hello World!").await?;
+    ctx.say("Hallo Welt!").await?;
     Ok(())
 }
 
+///Informationen über den Bot
 #[poise::command(slash_command, prefix_command)]
-async fn lorem(ctx: Context<'_>) -> Result<(), Error> {
-    ctx.say("Lorem Ipsum dolor sit amet!").await?;
+async fn botinfo(ctx: Context<'_>) -> Result<(), Error> {
+
+    ctx.send(poise::CreateReply::default()
+    .content("Informationen über den Bot")
+    .embed(serenity::CreateEmbed::new()
+        .title("Bot-Info")
+        .description("Bot-Version: 0.2\nVerwendete Bibliotheken: Serenity + Poise\nProgrammiersprache: Rust\nEntwickler: SvH")
+    )
+    .ephemeral(true)).await?;
     Ok(())
 }
+
+/// To-Do-Liste
+#[poise::command(slash_command, prefix_command)]
+async fn todo(ctx: Context<'_>) -> Result<(), Error> {
+    ctx.send(poise::CreateReply::default()
+    .content("ToDo-Liste")
+    .embed(serenity::CreateEmbed::new()
+        .title("To-Do-Liste")
+        .description("Embeds besser anzeigen\nBrauchbaren Hilfe-Command basteln\nCommands in seperate Files auslagern\nCommands für Memes einbauen\nNordhanar-Fact-Sheet einbauen.")
+    )
+    .ephemeral(true)).await?;
+    Ok(())
+}
+
+/* Primary function */
 
 #[tokio::main]
 async fn main() {
@@ -39,7 +56,7 @@ async fn main() {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![age(), hello(), lorem()],
+            commands: vec![hello(), botinfo(), todo()],
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
