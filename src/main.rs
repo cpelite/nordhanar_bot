@@ -2,52 +2,13 @@
 use poise::serenity_prelude as serenity;
 use dotenv::dotenv;
 use std::env;
+use crate::tools::commands_general::*;
+
+//pub mod 
+mod tools {
+    pub mod commands_general;
+}
 // Imports end here.
-
-
-struct Data {} // User data, which is stored and accessible in all command invocations
-type Error = Box<dyn std::error::Error + Send + Sync>;
-type Context<'a> = poise::Context<'a, Data, Error>;
-
-
-/* COMMANDS */
-
-/// Hallo Welt!
-#[poise::command(slash_command, prefix_command)]
-async fn hello(ctx: Context<'_>) -> Result<(), Error> {
-    ctx.say("Hallo Welt!").await?;
-    Ok(())
-}
-
-///Informationen über den Bot
-#[poise::command(slash_command, prefix_command)]
-async fn botinfo(ctx: Context<'_>) -> Result<(), Error> {
-
-    ctx.send(poise::CreateReply::default()
-    .content("Informationen über den Bot")
-    .embed(serenity::CreateEmbed::new()
-        .title("Bot-Info")
-        .description("Bot-Version: 0.2\nVerwendete Bibliotheken: Serenity + Poise\nProgrammiersprache: Rust\nEntwickler: SvH")
-    )
-    .ephemeral(true)).await?;
-    Ok(())
-}
-
-/// To-Do-Liste
-/// Another "Test-Command"
-#[poise::command(slash_command, prefix_command)]
-async fn todo(ctx: Context<'_>) -> Result<(), Error> {
-    ctx.send(poise::CreateReply::default()
-    .content("ToDo-Liste")
-    .embed(serenity::CreateEmbed::new()
-        .title("To-Do-Liste")
-        .description("Embeds besser anzeigen\nBrauchbaren Hilfe-Command basteln\nCommands in seperate Files auslagern\nCommands für Memes einbauen\nNordhanar-Fact-Sheet einbauen.")
-    )
-    .ephemeral(true)).await?;
-    Ok(())
-}
-
-/* Primary function */
 
 #[tokio::main]
 async fn main() {
@@ -57,7 +18,7 @@ async fn main() {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![hello(), botinfo(), todo()],
+            commands: vec![hello(), botinfo(), todo(), atombombenfetisch(), sirene()],
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
