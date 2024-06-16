@@ -18,7 +18,7 @@ async fn main() {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![hello(), botinfo(), todo(), atombombenfetisch(), sirene()],
+            commands: vec![hello(), botinfo(), todo(), atombombenfetisch(), sirene(), factsheet()],
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
