@@ -60,7 +60,7 @@ pub async fn todo(ctx: Context<'_>) -> Result<(), Error> {
     .content("ToDo-Liste")
     .embed(serenity::CreateEmbed::new()
         .title("To-Do-Liste")
-        .description("Embeds besser anzeigen\nBrauchbaren Hilfe-Command basteln\nCommands für Memes einbauen\nNordhanar-Fact-Sheet einbauen.")
+        .description("Embeds besser anzeigen\nBrauchbaren Hilfe-Command basteln\nCommands für Memes einbauen")
     )
     .ephemeral(true)).await?;
     Ok(())
